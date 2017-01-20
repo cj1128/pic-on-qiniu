@@ -1,0 +1,64 @@
+/*
+* @Author: CJ Ting
+* @Date:   2016-04-01 14:48:09
+* @Last Modified by:   CJ Ting
+* @Last Modified time: 2016-04-06 12:28:41
+*/
+
+@require "colors"
+
+.upload__dropzone
+  width: 100%
+  cursor: copy
+  background: white
+  border-radius: 5px
+  box-shadow: 0 0 10px #aaa
+
+.upload__files
+  box-shadow: 0 0 10px #aaa
+  border-radius: 5px
+
+.upload__dropzone--active
+  border: 2px dashed $main
+
+.upload__placeholder
+  align-self: center
+  margin: 0
+  padding: 80px 20px
+  text-align: center
+  color: $gray
+
+.upload__item
+  cursor: default
+  padding: 20px 40px
+  display: flex
+  align-items: center
+  > img
+    width: 20%
+    margin-right: 10%
+
+.upload__loading
+  display: flex
+  align-items: center
+  flex: 1
+  > span
+    color: gray
+    margin-left: auto
+    margin-right: 50px
+
+.upload__item__result
+  width: 70%
+  padding: 0
+  display: flex
+  padding: 10px 0
+  align-items: center
+  > span:first-child
+    margin-right: 20px
+    overflow: hidden
+    text-overflow: ellipsis
+    white-space: nowrap
+    color: $main
+  > img:last-child
+    width: 20px
+    margin-left: auto
+    cursor: pointer

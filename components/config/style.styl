@@ -1,0 +1,64 @@
+/*
+* @Author: CJ Ting
+* @Date: 2017-01-19 16:17:43
+* @Email: fatelovely1128@gmail.com
+*/
+
+@require "colors"
+
+.config
+  position: fixed
+  top: 0
+  left: 0
+  width: 100vw
+  height: 100vh
+  display: flex
+  align-items: flex-start
+  background: rgba(10,10,10,0.1)
+
+.config--hide
+  display: none
+
+.config__content
+  width: 500px
+  margin: 0 auto
+  margin-top: 10%
+  background: white
+  padding: 20px
+  // border-top: solid 3px #0087f7
+  border-top: solid 3px $main
+
+.config__header
+  text-align: center
+  font-weight: 400
+
+.config__item
+  padding: 20px 0
+  > span
+    display: block
+    font-size: 1.2rem
+    margin-bottom: 10px
+  > input
+    display: block
+    width: 100%
+    box-sizing: border-box
+    padding: 8px 10px
+    outline: none
+    border: solid 1px #eee
+    border-radius: 3px
+    &:focus
+      border: solid 1px $main
+      box-shadow: 0 0 1px $main
+
+.config__button
+  padding: 10px 15px
+  width: 20%
+  margin: auto
+  text-align: center
+  background: $main
+  color: white
+  cursor: pointer
+  border-radius: 3px
+  &:hover
+    background: darken($main, 5)
+    box-shadow: 0 0 5px darken($main, 5)

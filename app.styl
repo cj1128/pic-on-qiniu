@@ -1,0 +1,46 @@
+/*
+* @Author: dingxijin
+* @Date:   2016-03-24 12:27:30
+* @Last Modified by:   CJ Ting
+* @Last Modified time: 2016-03-31 18:55:05
+*/
+
+@require "colors"
+
+html
+  font-size: 14px
+  font-family: "Hiragino Sans GB", Helvetica, Tahoma, Arial, "Microsoft YaHei", "微软雅黑", STXihei, "华文细黑" , SimSun, "宋体", Heiti, "黑体", sans-serif
+
+body
+  font-size: 100%
+
+.app
+  width: 80%
+  max-width: 1000px
+  margin: 50px auto
+
+.app__tab
+  padding-bottom: 15px
+  display: flex
+  color: $gray
+  > span
+    cursor: pointer
+    &:hover
+      color: $main
+  > span:nth-child(2)
+    margin-left: auto
+
+.app__tab__current
+  color: $main
+
+.config-tip
+  padding: 20px
+  color: $gray
+  > h1
+    font-weight: 400
+    text-align: center
+  > ol
+    > li
+      padding: 20px 0
+      a
+        color: $main
