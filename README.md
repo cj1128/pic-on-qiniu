@@ -16,7 +16,7 @@
 
 ## 使用
 
-![](http://ok2pw0x6d.bkt.clouddn.com/FshihH-X8XPLfs-XQgfPYPr3UbO6.gif)
+![](https://cloud.githubusercontent.com/assets/4210829/22183480/5b54e38a-e0fa-11e6-9f72-f6d7a19ad85d.gif)
 
 图床使用七牛存储接口，图片将上传到用户设置的七牛空间中。因此，使用之前，需要首先配置七牛参数。
 
