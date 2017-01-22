@@ -82,6 +82,7 @@ export default class History extends React.Component {
   }
 
   renderGrid(items) {
+    items.sort((a, b) => b.putTime - a.putTime)
     const data1 = items.filter((d, i) => i % 3 === 0)
     const data2 = items.filter((d, i) => i % 3 === 1)
     const data3 = items.filter((d, i) => i % 3 === 2)
