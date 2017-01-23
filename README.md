@@ -8,7 +8,7 @@
 
 ### Chrome应用商店
 
-[![Chrome Web Store](http://ok2pw0x6d.bkt.clouddn.com/Fu6A9oFQcrNuGVo43Iza7XZnMZrk.jpg)](https://chrome.google.com/webstore/detail/nikfegmndlnacioppfnmladfjanfdjfe/publish-delayed?hl=zh-CN&authuser=1)
+[![Chrome Web Store](http://ok2pw0x6d.bkt.clouddn.com/Fu6A9oFQcrNuGVo43Iza7XZnMZrk.jpg)](https://chrome.google.com/webstore/detail/%E5%9B%BE%E5%BA%8Aon%E4%B8%83%E7%89%9B/nikfegmndlnacioppfnmladfjanfdjfe/related?utm_source=chrome-ntp-icon&authuser=1)
 
 ### 下载安装
 
