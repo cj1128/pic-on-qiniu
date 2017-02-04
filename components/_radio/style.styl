@@ -1,0 +1,35 @@
+/*
+* @Author: CJ Ting
+* @Date: 2017-02-04 11:30:17
+* @Email: fatelovely1128@gmail.com
+*/
+
+@require "colors"
+
+._radio
+  margin: 0
+  > label
+    display: flex
+    align-items: center
+    ._radio__indicator
+      display: flex
+      width: 10px
+      height: 10px
+      border-radius: 50%
+      margin-right: 10px
+      margin-bottom: 3px
+      border: solid 1px $main
+      background-color: white
+      ._radio__indicator__content
+        width: 6px
+        height: 6px
+        margin: 2px
+        border-radius: 100%
+    > span
+      color: $main
+  input
+    display: none
+  input:checked + label ._radio__indicator__content
+    background-color: $main
+  input:disabled + label > div
+    background-color: #E7E5E1

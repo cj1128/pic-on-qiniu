@@ -9,8 +9,14 @@ import { safe64, utf16to8, stringPresent } from "utils"
 import axios from "axios"
 import CryptoJS from "crypto-js"
 import { stringify } from "qs"
+import { REGION_HUADONG, REGION_HUANAN, REGION_HUABEI, REGION_BEIMEI } from "db"
 
-const UPLOAD_URL = "http://up.qiniu.com"
+const UPLOAD_URL = {
+  [REGION_HUADONG]: "http://up.qiniu.com",
+  [REGION_HUANAN]: "http://up-z2.qiniu.com",
+  [REGION_HUABEI]: "http://up-z1.qiniu.com",
+  [REGION_BEIMEI]: "http://up-na0.qiniu.com",
+}
 
 // for uploading file
 function genUpToken(accessKey, secretKey, policy) {
@@ -61,10 +67,11 @@ export function fetch() {
 }
 
 export function upload(file, cb) {
+  const url = UPLOAD_URL[getItem("region")]
   const formData = new FormData()
   formData.append("file", file)
   formData.append("token", getUpToken())
-  axios.post(UPLOAD_URL, formData)
+  axios.post(url, formData)
     .then(res => {
       const obj = res.data
       if(obj.error != null) {
@@ -76,8 +83,15 @@ export function upload(file, cb) {
     .catch(error => {
       if(error.response) {
         if(error.response.status === 401) {
-          cb(new Error("授权失败，请检查七牛Access Key, Secret Key配置"))
+          cb(new Error("授权失败，请检查七牛Access Key, Secret Key设置"))
+          return
         }
+        const msg = error.response.data.error
+        if(msg.indexOf("incorrect region") !== -1) {
+          cb(new Error("区域选择错误，请检查存储空间区域设置"))
+          return
+        }
+        cb(new Error(error.response.data.error))
       } else {
         cb(error)
       }
@@ -89,4 +103,5 @@ export function isConfigOk() {
     && stringPresent(getItem("secretKey"))
     && stringPresent(getItem("bucket"))
     && stringPresent(getItem("bucketDomain"))
+    && getItem("region")
 }

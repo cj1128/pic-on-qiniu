@@ -7,13 +7,19 @@
 const db = {}
 const DB_KEY = "_data"
 
+export const REGION_HUABEI = 1
+export const REGION_HUANAN = 2
+export const REGION_HUADONG = 3
+export const REGION_BEIMEI = 4
+
 const ALLOWED_ITEMS = [
   "accessKey",
   "secretKey",
   "bucket",
   "bucketDomain",
   "token",
-  "tokenTime"
+  "tokenTime",
+  "region",
 ]
 
 const item = localStorage.getItem(DB_KEY)

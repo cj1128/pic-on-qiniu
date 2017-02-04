@@ -13,24 +13,29 @@
   width: 100vw
   height: 100vh
   display: flex
-  align-items: flex-start
+  align-items: center
   background: rgba(10,10,10,0.1)
 
 .config--hide
   display: none
 
-.config__content
+.config__content-wrapper
   width: 500px
-  margin: 0 auto
-  margin-top: 10%
+  overflow: auto
+  margin: auto
   background: white
   padding: 20px
-  // border-top: solid 3px #0087f7
   border-top: solid 3px $main
+  max-height: 80vh
 
 .config__header
   text-align: center
   font-weight: 400
+
+.config__regions
+  display: flex
+  padding: 15px
+  justify-content: space-between
 
 .config__item
   padding: 20px 0
