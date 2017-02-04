@@ -15,10 +15,10 @@ import { isDescendant } from "utils"
 export default class Config extends React.Component {
   state = {
     show: false,
-    accessKey: getItem("accessKey"),
-    secretKey: getItem("secretKey"),
-    bucket: getItem("bucket"),
-    bucketDomain: getItem("bucketDomain"),
+    accessKey: getItem("accessKey") || "",
+    secretKey: getItem("secretKey") || "",
+    bucket: getItem("bucket") || "",
+    bucketDomain: getItem("bucketDomain") || "",
     region: getItem("region") || REGION_HUADONG,
   }
 

@@ -18120,10 +18120,10 @@
 
 	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Config.__proto__ || Object.getPrototypeOf(Config)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
 	      show: false,
-	      accessKey: (0, _db.getItem)("accessKey"),
-	      secretKey: (0, _db.getItem)("secretKey"),
-	      bucket: (0, _db.getItem)("bucket"),
-	      bucketDomain: (0, _db.getItem)("bucketDomain"),
+	      accessKey: (0, _db.getItem)("accessKey") || "",
+	      secretKey: (0, _db.getItem)("secretKey") || "",
+	      bucket: (0, _db.getItem)("bucket") || "",
+	      bucketDomain: (0, _db.getItem)("bucketDomain") || "",
 	      region: (0, _db.getItem)("region") || _db.REGION_HUADONG
 	    }, _this.hide = function () {
 	      _this.setState({
