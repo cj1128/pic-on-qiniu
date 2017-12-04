@@ -1,4 +1,4 @@
-(function(modules) { // webpackBootstrap
+/******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 
@@ -65,13 +65,6 @@
 	var _app2 = _interopRequireDefault(_app);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	/*
-	* @Author: dingxijin
-	* @Date:   2016-03-24 12:22:03
-	* @Last Modified by:   dingxijin
-	* @Last Modified time: 2016-03-24 12:23:34
-	*/
 
 	_reactDom2.default.render(_react2.default.createElement(_app2.default, null), document.getElementById("app-container"));
 
@@ -8283,15 +8276,6 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.getItem = getItem;
-	exports.setItem = setItem;
-	/*
-	* @Author: CJ Ting
-	* @Date: 2017-01-20 14:34:12
-	* @Email: fatelovely1128@gmail.com
-	*/
-
-	var db = {};
 	var DB_KEY = "_data";
 
 	var REGION_HUABEI = exports.REGION_HUABEI = 1;
@@ -8301,25 +8285,23 @@
 
 	var ALLOWED_ITEMS = ["accessKey", "secretKey", "bucket", "bucketDomain", "token", "tokenTime", "region"];
 
-	var item = localStorage.getItem(DB_KEY);
-	if (item != null) {
-	  var obj = JSON.parse(item);
-	  for (var k in obj) {
-	    db[k] = obj[k];
-	  }
-	}
+	var data = localStorage.getItem(DB_KEY) ? JSON.parse(localStorage.getItem(DB_KEY)) : {};
 
-	function getItem(k) {
-	  return db[k];
-	}
+	var db = {};
 
-	function setItem(k, v) {
-	  if (ALLOWED_ITEMS.indexOf(k) === -1) {
-	    throw new Error("item " + k + " is not allowed");
-	  }
-	  db[k] = v;
-	  localStorage.setItem(DB_KEY, JSON.stringify(db));
-	}
+	ALLOWED_ITEMS.forEach(function (name) {
+	  Object.defineProperty(db, name, {
+	    get: function get() {
+	      return data[name];
+	    },
+	    set: function set(newValue) {
+	      data[name] = newValue;
+	      localStorage.setItem(DB_KEY, JSON.stringify(data));
+	    }
+	  });
+	});
+
+	exports.default = db;
 
 /***/ },
 /* 48 */
@@ -8330,14 +8312,12 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.isConfigOk = undefined;
 
 	var _UPLOAD_URL;
 
 	exports.fetch = fetch;
 	exports.upload = upload;
-	exports.isConfigOk = isConfigOk;
-
-	var _db = __webpack_require__(47);
 
 	var _utils = __webpack_require__(49);
 
@@ -8351,19 +8331,23 @@
 
 	var _qs = __webpack_require__(198);
 
+	var _db = __webpack_require__(47);
+
+	var _db2 = _interopRequireDefault(_db);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; } /*
-	                                                                                                                                                                                                                  * @Author: CJ Ting
-	                                                                                                                                                                                                                  * @Date: 2017-01-19 18:37:35
-	                                                                                                                                                                                                                  * @Email: fatelovely1128@gmail.com
-	                                                                                                                                                                                                                  */
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 	var UPLOAD_URL = (_UPLOAD_URL = {}, _defineProperty(_UPLOAD_URL, _db.REGION_HUADONG, "http://up.qiniu.com"), _defineProperty(_UPLOAD_URL, _db.REGION_HUANAN, "http://up-z2.qiniu.com"), _defineProperty(_UPLOAD_URL, _db.REGION_HUABEI, "http://up-z1.qiniu.com"), _defineProperty(_UPLOAD_URL, _db.REGION_BEIMEI, "http://up-na0.qiniu.com"), _UPLOAD_URL);
 
 	// for uploading file
-	function genUpToken(accessKey, secretKey, policy) {
-	  var policyStr = JSON.stringify(policy);
+	function genUpToken(accessKey, secretKey) {
+	  var policyStr = JSON.stringify({
+	    scope: _db2.default.bucket,
+	    deadline: Math.round(new Date().getTime() / 1000) + 12 * 3600, // 12 hours
+	    saveKey: "$(etag)$(ext)"
+	  });
 	  var encoded = btoa((0, _utils.utf16to8)(policyStr));
 	  var hash = _cryptoJs2.default.HmacSHA1(encoded, secretKey);
 	  var encodedSign = hash.toString(_cryptoJs2.default.enc.Base64);
@@ -8379,43 +8363,31 @@
 	  return accessKey + ":" + encodedSign;
 	}
 
-	function getUpToken() {
-	  if ((0, _db.getItem)("token") && new Date().getTime() - (0, _db.getItem)("tokenTime") < 12 * 3600000) {
-	    return (0, _db.getItem)("token");
-	  }
-	  var policy = {
-	    scope: (0, _db.getItem)("bucket"),
-	    deadline: Math.round(new Date().getTime() / 1000) + 12 * 3600, // 12 hours
-	    saveKey: "$(etag)$(ext)"
-	  };
-	  var time = new Date().getTime();
-	  var token = genUpToken((0, _db.getItem)("accessKey"), (0, _db.getItem)("secretKey"), policy);
-	  (0, _db.setItem)("token", token);
-	  (0, _db.setItem)("tokenTime", time);
-	  return token;
-	}
-
 	function fetch() {
-	  var path = "/list?bucket=" + (0, _db.getItem)("bucket");
+	  var path = "/list?bucket=" + _db2.default.bucket;
 	  return _axios2.default.post("http://rsf.qbox.me" + path, null, {
 	    headers: {
-	      Authorization: "QBox " + genManageToken((0, _db.getItem)("accessKey"), (0, _db.getItem)("secretKey"), path, "")
+	      Authorization: "QBox " + genManageToken(_db2.default.accessKey, _db2.default.secretKey, path, "")
 	    }
 	  });
 	}
 
 	function upload(file, cb) {
-	  var url = UPLOAD_URL[(0, _db.getItem)("region")];
+	  var url = UPLOAD_URL[_db2.default.region];
 	  var formData = new FormData();
 	  formData.append("file", file);
-	  formData.append("token", getUpToken());
+	  var token = _db2.default.token && new Date().getTime() - _db2.default.tokenTime < 12 * 3600000 ? _db2.default.token : genUpToken(_db2.default.accessKey, _db2.default.secretKey);
+	  formData.append("token", token);
 	  _axios2.default.post(url, formData).then(function (res) {
 	    var obj = res.data;
 	    if (obj.error != null) {
 	      cb(new Error(obj.error));
 	      return;
 	    }
-	    cb(null, "http://" + (0, _db.getItem)("bucketDomain") + "/" + obj.key);
+	    cb(null, "http://" + _db2.default.bucketDomain + "/" + obj.key);
+	    // cache token
+	    _db2.default.token = token;
+	    _db2.default.tokenTime = new Date().getTime();
 	  }).catch(function (error) {
 	    if (error.response) {
 	      if (error.response.status === 401) {
@@ -8434,9 +8406,9 @@
 	  });
 	}
 
-	function isConfigOk() {
-	  return (0, _utils.stringPresent)((0, _db.getItem)("accessKey")) && (0, _utils.stringPresent)((0, _db.getItem)("secretKey")) && (0, _utils.stringPresent)((0, _db.getItem)("bucket")) && (0, _utils.stringPresent)((0, _db.getItem)("bucketDomain")) && (0, _db.getItem)("region");
-	}
+	var isConfigOk = exports.isConfigOk = function isConfigOk() {
+	  return (0, _utils.stringPresent)(_db2.default.accessKey) && (0, _utils.stringPresent)(_db2.default.secretKey) && (0, _utils.stringPresent)(_db2.default.bucket) && (0, _utils.stringPresent)(_db2.default.bucketDomain) && _db2.default.region;
+	};
 
 /***/ },
 /* 49 */
@@ -8451,13 +8423,6 @@
 	exports.safe64 = safe64;
 	exports.stringPresent = stringPresent;
 	exports.isDescendant = isDescendant;
-	/*
-	* @Author: CJ Ting
-	* @Date:   2016-03-24 13:39:26
-	* @Last Modified by:   CJ Ting
-	* @Last Modified time: 2016-04-05 12:28:42
-	*/
-
 	function utf16to8(str) {
 	  var out, i, len, c;
 	  out = "";
@@ -17834,12 +17799,7 @@
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /*
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * @Author: dingxijin
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * @Date:   2016-03-24 12:22:22
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * @Last Modified by:   CJ Ting
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * @Last Modified time: 2016-03-31 18:56:25
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               */
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var App = function (_React$Component) {
 	  _inherits(App, _React$Component);
@@ -17989,12 +17949,6 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	/*
-	* @Author: CJ Ting
-	* @Date: 2017-01-22 21:54:10
-	* @Email: fatelovely1128@gmail.com
-	*/
-
 	exports.default = function () {
 	  return _react2.default.createElement("div", { className: "_loading" });
 	};
@@ -18016,12 +17970,6 @@
 	var _react2 = _interopRequireDefault(_react);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	/*
-	* @Author: CJ Ting
-	* @Date: 2017-02-04 11:30:13
-	* @Email: fatelovely1128@gmail.com
-	*/
 
 	var Radio = function Radio(props) {
 	  var id = "_radio-" + props.text;
@@ -18082,6 +18030,8 @@
 
 	var _db = __webpack_require__(47);
 
+	var _db2 = _interopRequireDefault(_db);
+
 	var _classnames = __webpack_require__(77);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
@@ -18098,11 +18048,7 @@
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /*
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * @Author: CJ Ting
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * @Date: 2017-01-19 16:13:06
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * @Email: fatelovely1128@gmail.com
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               */
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var Config = function (_React$Component) {
 	  _inherits(Config, _React$Component);
@@ -18120,11 +18066,11 @@
 
 	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Config.__proto__ || Object.getPrototypeOf(Config)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
 	      show: false,
-	      accessKey: (0, _db.getItem)("accessKey") || "",
-	      secretKey: (0, _db.getItem)("secretKey") || "",
-	      bucket: (0, _db.getItem)("bucket") || "",
-	      bucketDomain: (0, _db.getItem)("bucketDomain") || "",
-	      region: (0, _db.getItem)("region") || _db.REGION_HUADONG
+	      accessKey: _db2.default.accessKey || "",
+	      secretKey: _db2.default.secretKey || "",
+	      bucket: _db2.default.bucket || "",
+	      bucketDomain: _db2.default.bucketDomain || "",
+	      region: _db2.default.region || _db.REGION_HUADONG
 	    }, _this.hide = function () {
 	      _this.setState({
 	        show: false
@@ -18134,11 +18080,12 @@
 	        show: true
 	      });
 	    }, _this.save = function () {
-	      (0, _db.setItem)("accessKey", _this.state.accessKey.trim());
-	      (0, _db.setItem)("secretKey", _this.state.secretKey.trim());
-	      (0, _db.setItem)("bucket", _this.state.bucket.trim());
-	      (0, _db.setItem)("bucketDomain", _this.state.bucketDomain.trim());
-	      (0, _db.setItem)("region", _this.state.region);
+	      _db2.default.accessKey = _this.state.accessKey.trim();
+	      _db2.default.secretKey = _this.state.secretKey.trim();
+	      _db2.default.bucket = _this.state.bucket.trim();
+	      _db2.default.bucketDomain = _this.state.bucketDomain.trim();
+	      _db2.default.region = _this.state.region;
+	      _db2.default.token = null; // clear token cache
 	      _this.hide();
 	      _this.props.onConfigUpdated();
 	    }, _this.onClickOutside = function (evt) {
@@ -18332,12 +18279,7 @@
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /*
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * @Author: CJ Ting
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * @Date:   2016-04-01 14:39:09
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * @Last Modified by:   CJ Ting
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * @Last Modified time: 2016-04-06 12:27:18
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               */
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var mock = [{
 	  "key": "Fhq6c2u8pQXbTQkA3vX7kY4d-vje.jpg",
@@ -18374,6 +18316,7 @@
 
 	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = History.__proto__ || Object.getPrototypeOf(History)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
 	      layout: "list",
+	      unauthorized: false,
 	      items: null
 	    }, _temp), _possibleConstructorReturn(_this, _ret);
 	  }
@@ -18399,6 +18342,11 @@
 	          items: res.data.items
 	        });
 	      }).catch(function (error) {
+	        if (error.response.status === 401) {
+	          _this2.setState({
+	            unauthorized: true
+	          });
+	        }
 	        (0, _sweetalert2.default)(error.message, "", "error");
 	      });
 	    }
@@ -18470,12 +18418,18 @@
 	  }, {
 	    key: "render",
 	    value: function render() {
-	      var items = this.state.items;
+	      var _state = this.state,
+	          items = _state.items,
+	          unauthorized = _state.unauthorized;
 
 	      return _react2.default.createElement(
 	        "div",
 	        { className: "history" },
-	        items == null ? _react2.default.createElement(
+	        items == null ? unauthorized ? _react2.default.createElement(
+	          "p",
+	          { className: "history__loading" },
+	          "\u6388\u6743\u9519\u8BEF\uFF0C\u8BF7\u68C0\u67E5\u8BBE\u7F6E"
+	        ) : _react2.default.createElement(
 	          "p",
 	          { className: "history__loading" },
 	          "\u6B63\u5728\u4ECE\u4E03\u725B\u83B7\u53D6\u6570\u636E..."
@@ -18543,12 +18497,7 @@
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /*
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * @Author: CJ Ting
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * @Date:   2016-04-01 14:51:34
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * @Last Modified by:   CJ Ting
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * @Last Modified time: 2016-04-06 12:29:01
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               */
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var Upload = function (_React$Component) {
 	  _inherits(Upload, _React$Component);
@@ -18792,11 +18741,7 @@
 	  "hideEasing": "linear",
 	  "showMethod": "fadeIn",
 	  "hideMethod": "fadeOut"
-	}; /*
-	   * @Author: CJ Ting
-	   * @Date: 2017-01-21 20:00:24
-	   * @Email: fatelovely1128@gmail.com
-	   */
+	};
 
 /***/ },
 /* 145 */
@@ -22520,7 +22465,7 @@
 
 
 	// module
-	exports.push([module.id, "/*\n* @Author: CJ Ting\n* @Date:   2016-04-01 14:48:09\n* @Last Modified by:   CJ Ting\n* @Last Modified time: 2016-04-06 12:28:41\n*/\n.upload__dropzone {\n  width: 100%;\n  cursor: copy;\n  background: #fff;\n  border-radius: 5px;\n  box-shadow: 0 0 10px #aaa;\n}\n.upload__files {\n  box-shadow: 0 0 10px #aaa;\n  border-radius: 5px;\n}\n.upload__dropzone--active {\n  border: 2px dashed #0087f7;\n}\n.upload__placeholder {\n  align-self: center;\n  margin: 0;\n  padding: 80px 20px;\n  text-align: center;\n  color: rgba(102,102,102,0.5);\n}\n.upload__item {\n  cursor: default;\n  padding: 20px 40px;\n  display: flex;\n  align-items: center;\n}\n.upload__item > img {\n  width: 20%;\n  margin-right: 10%;\n}\n.upload__loading {\n  display: flex;\n  align-items: center;\n  flex: 1;\n}\n.upload__loading > span {\n  color: #808080;\n  margin-left: auto;\n  margin-right: 50px;\n}\n.upload__item__result {\n  width: 70%;\n  padding: 0;\n  display: flex;\n  padding: 10px 0;\n  align-items: center;\n}\n.upload__item__result > span:first-child {\n  margin-right: 20px;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n  color: #0087f7;\n}\n.upload__item__result > img:last-child {\n  width: 20px;\n  margin-left: auto;\n  cursor: pointer;\n}\n", ""]);
+	exports.push([module.id, ".upload__dropzone {\n  width: 100%;\n  cursor: copy;\n  background: #fff;\n  border-radius: 5px;\n  box-shadow: 0 0 10px #aaa;\n}\n.upload__files {\n  box-shadow: 0 0 10px #aaa;\n  border-radius: 5px;\n}\n.upload__dropzone--active {\n  border: 2px dashed #0087f7;\n}\n.upload__placeholder {\n  align-self: center;\n  margin: 0;\n  padding: 80px 20px;\n  text-align: center;\n  color: rgba(102,102,102,0.5);\n}\n.upload__item {\n  cursor: default;\n  padding: 20px 40px;\n  display: flex;\n  align-items: center;\n}\n.upload__item > img {\n  width: 20%;\n  margin-right: 10%;\n}\n.upload__loading {\n  display: flex;\n  align-items: center;\n  flex: 1;\n}\n.upload__loading > span {\n  color: #808080;\n  margin-left: auto;\n  margin-right: 50px;\n}\n.upload__item__result {\n  width: 70%;\n  padding: 0;\n  display: flex;\n  padding: 10px 0;\n  align-items: center;\n}\n.upload__item__result > span:first-child {\n  margin-right: 20px;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n  color: #0087f7;\n}\n.upload__item__result > img:last-child {\n  width: 20px;\n  margin-left: auto;\n  cursor: pointer;\n}\n", ""]);
 
 	// exports
 

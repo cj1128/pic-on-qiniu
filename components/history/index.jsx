@@ -31,6 +31,7 @@ function formateTime(ts) {
 export default class History extends React.Component {
   state = {
     layout: "list",
+    unauthorized: false,
     items: null,
   }
 
@@ -52,6 +53,11 @@ export default class History extends React.Component {
       })
     })
       .catch(error => {
+        if(error.response.status === 401) {
+          this.setState({
+            unauthorized: true,
+          })
+        }
         swal(error.message, "", "error")
       })
   }
@@ -101,14 +107,19 @@ export default class History extends React.Component {
   }
 
   render() {
-    const { items } = this.state
+    const { items, unauthorized } = this.state
     return (
       <div className="history">
         {
           items == null ?
-            <p className="history__loading">
-              正在从七牛获取数据...
-            </p>
+            unauthorized ?
+              <p className="history__loading">
+                授权错误，请检查设置
+              </p>
+              :
+              <p className="history__loading">
+                正在从七牛获取数据...
+              </p>
             :
             items.length === 0 ?
               <p className="history__tip">
