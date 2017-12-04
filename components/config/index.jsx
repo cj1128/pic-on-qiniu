@@ -1,12 +1,6 @@
-/*
-* @Author: CJ Ting
-* @Date: 2017-01-19 16:13:06
-* @Email: fatelovely1128@gmail.com
-*/
-
 import "./style"
 import React from "react"
-import { getItem, setItem } from "db"
+import db from "db"
 import { REGION_HUANAN, REGION_HUADONG, REGION_HUABEI, REGION_BEIMEI } from "db"
 import cx from "classnames"
 import Radio from "_radio"
@@ -15,11 +9,11 @@ import { isDescendant } from "utils"
 export default class Config extends React.Component {
   state = {
     show: false,
-    accessKey: getItem("accessKey") || "",
-    secretKey: getItem("secretKey") || "",
-    bucket: getItem("bucket") || "",
-    bucketDomain: getItem("bucketDomain") || "",
-    region: getItem("region") || REGION_HUADONG,
+    accessKey: db.accessKey || "",
+    secretKey: db.secretKey || "",
+    bucket: db.bucket || "",
+    bucketDomain: db.bucketDomain || "",
+    region: db.region || REGION_HUADONG,
   }
 
   hide = () => {
@@ -35,11 +29,12 @@ export default class Config extends React.Component {
   }
 
   save = () => {
-    setItem("accessKey", this.state.accessKey.trim())
-    setItem("secretKey", this.state.secretKey.trim())
-    setItem("bucket", this.state.bucket.trim())
-    setItem("bucketDomain", this.state.bucketDomain.trim())
-    setItem("region", this.state.region)
+    db.accessKey = this.state.accessKey.trim()
+    db.secretKey = this.state.secretKey.trim()
+    db.bucket = this.state.bucket.trim()
+    db.bucketDomain = this.state.bucketDomain.trim()
+    db.region = this.state.region
+    db.token = null // clear token cache
     this.hide()
     this.props.onConfigUpdated()
   }

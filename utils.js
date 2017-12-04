@@ -1,10 +1,3 @@
-/*
-* @Author: CJ Ting
-* @Date:   2016-03-24 13:39:26
-* @Last Modified by:   CJ Ting
-* @Last Modified time: 2016-04-05 12:28:42
-*/
-
 export function utf16to8(str) {
   var out, i, len, c
   out = ""

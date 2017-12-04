@@ -1,9 +1,3 @@
-/*
-* @Author: CJ Ting
-* @Date: 2017-02-04 11:30:13
-* @Email: fatelovely1128@gmail.com
-*/
-
 import "./style"
 import React, { PropTypes } from "react"
 

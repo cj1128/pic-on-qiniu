@@ -1,9 +1,3 @@
-/*
-* @Author: CJ Ting
-* @Date: 2017-01-21 20:00:24
-* @Email: fatelovely1128@gmail.com
-*/
-
 import toastr from "toastr"
 
 toastr.options = {

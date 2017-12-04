@@ -1,10 +1,3 @@
-/*
-* @Author: dingxijin
-* @Date:   2016-03-24 12:22:22
-* @Last Modified by:   CJ Ting
-* @Last Modified time: 2016-03-31 18:56:25
-*/
-
 import "./app.styl"
 import React from "react"
 import Upload from "upload"

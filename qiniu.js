@@ -1,15 +1,8 @@
-/*
-* @Author: CJ Ting
-* @Date: 2017-01-19 18:37:35
-* @Email: fatelovely1128@gmail.com
-*/
-
-import { getItem, setItem } from "db"
 import { safe64, utf16to8, stringPresent } from "utils"
 import axios from "axios"
 import CryptoJS from "crypto-js"
 import { stringify } from "qs"
-import { REGION_HUADONG, REGION_HUANAN, REGION_HUABEI, REGION_BEIMEI } from "db"
+import db, { REGION_HUADONG, REGION_HUANAN, REGION_HUABEI, REGION_BEIMEI } from "db"
 
 const UPLOAD_URL = {
   [REGION_HUADONG]: "http://up.qiniu.com",
@@ -19,8 +12,12 @@ const UPLOAD_URL = {
 }
 
 // for uploading file
-function genUpToken(accessKey, secretKey, policy) {
-  var policyStr = JSON.stringify(policy)
+function genUpToken(accessKey, secretKey) {
+  var policyStr = JSON.stringify({
+    scope: db.bucket,
+    deadline: Math.round(new Date().getTime() / 1000) + 12 * 3600, // 12 hours
+    saveKey: "$(etag)$(ext)",
+  })
   var encoded = btoa(utf16to8(policyStr))
   var hash = CryptoJS.HmacSHA1(encoded, secretKey)
   var encodedSign = hash.toString(CryptoJS.enc.Base64)
@@ -36,29 +33,13 @@ function genManageToken(accessKey, secretKey, pathAndQuery, body) {
   return accessKey + ":" + encodedSign
 }
 
-function getUpToken() {
-  if(getItem("token") && (new Date().getTime() - getItem("tokenTime")) < 12*3600000) {
-    return getItem("token")
-  }
-  const policy = {
-    scope: getItem("bucket"),
-    deadline: Math.round(new Date().getTime() / 1000) + 12 * 3600, // 12 hours
-    saveKey: "$(etag)$(ext)",
-  }
-  const time = new Date().getTime()
-  const token =  genUpToken(getItem("accessKey"), getItem("secretKey"), policy)
-  setItem("token", token)
-  setItem("tokenTime", time)
-  return token
-}
-
 export function fetch() {
-  const path = "/list?bucket=" + getItem("bucket")
+  const path = "/list?bucket=" + db.bucket
   return axios.post("http://rsf.qbox.me" + path, null, {
     headers: {
       Authorization: "QBox " + genManageToken(
-        getItem("accessKey"),
-        getItem("secretKey"),
+        db.accessKey,
+        db.secretKey,
         path,
         "",
       ),
@@ -67,10 +48,14 @@ export function fetch() {
 }
 
 export function upload(file, cb) {
-  const url = UPLOAD_URL[getItem("region")]
+  const url = UPLOAD_URL[db.region]
   const formData = new FormData()
   formData.append("file", file)
-  formData.append("token", getUpToken())
+  const token = db.token && (new Date().getTime() - db.tokenTime) < 12 * 3600000 ?
+    db.token
+    :
+    genUpToken(db.accessKey, db.secretKey)
+  formData.append("token", token)
   axios.post(url, formData)
     .then(res => {
       const obj = res.data
@@ -78,7 +63,10 @@ export function upload(file, cb) {
         cb(new Error(obj.error))
         return
       }
-      cb(null, `http://${getItem("bucketDomain")}/${obj.key}`)
+      cb(null, `http://${db.bucketDomain}/${obj.key}`)
+      // cache token
+      db.token = token
+      db.tokenTime = new Date().getTime()
     })
     .catch(error => {
       if(error.response) {
@@ -98,10 +86,8 @@ export function upload(file, cb) {
     })
 }
 
-export function isConfigOk() {
-  return stringPresent(getItem("accessKey"))
-    && stringPresent(getItem("secretKey"))
-    && stringPresent(getItem("bucket"))
-    && stringPresent(getItem("bucketDomain"))
-    && getItem("region")
-}
+export const isConfigOk = () => stringPresent(db.accessKey) &&
+  stringPresent(db.secretKey) &&
+  stringPresent(db.bucket) &&
+  stringPresent(db.bucketDomain) &&
+  db.region

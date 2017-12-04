@@ -1,10 +1,3 @@
-/*
-* @Author: CJ Ting
-* @Date: 2017-01-20 14:34:12
-* @Email: fatelovely1128@gmail.com
-*/
-
-const db = {}
 const DB_KEY = "_data"
 
 export const REGION_HUABEI = 1
@@ -22,22 +15,24 @@ const ALLOWED_ITEMS = [
   "region",
 ]
 
-const item = localStorage.getItem(DB_KEY)
-if(item != null) {
-  const obj = JSON.parse(item)
-  for(var k in obj) {
-    db[k] = obj[k]
-  }
-}
 
-export function getItem(k) {
-  return db[k]
-}
+const data = localStorage.getItem(DB_KEY) ?
+  JSON.parse(localStorage.getItem(DB_KEY))
+  :
+  {}
 
-export function setItem(k, v) {
-  if(ALLOWED_ITEMS.indexOf(k) === -1) {
-    throw new Error(`item ${k} is not allowed`)
-  }
-  db[k] = v
-  localStorage.setItem(DB_KEY, JSON.stringify(db))
-}
+const db = {}
+
+ALLOWED_ITEMS.forEach(name => {
+  Object.defineProperty(db, name, {
+    get() {
+      return data[name]
+    },
+    set(newValue) {
+      data[name] = newValue
+      localStorage.setItem(DB_KEY, JSON.stringify(data))
+    },
+  })
+})
+
+export default db

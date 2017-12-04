@@ -1,10 +1,3 @@
-/*
-* @Author: CJ Ting
-* @Date:   2016-04-01 14:51:34
-* @Last Modified by:   CJ Ting
-* @Last Modified time: 2016-04-06 12:29:01
-*/
-
 import "./style.styl"
 import React from "react"
 import Dropzone from "react-dropzone"
