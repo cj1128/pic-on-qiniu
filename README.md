@@ -1,10 +1,14 @@
-# 图床on七牛
+<div align="center">
+  <img width="80px" src="http://ok2pw0x6d.bkt.clouddn.com/FjrbjEDqZNHmNmbLF2MgNln29vKE.png">
+</div>
 
-![](http://ok2pw0x6d.bkt.clouddn.com/FjrbjEDqZNHmNmbLF2MgNln29vKE.png)
+# 图床on七牛
 
 基于七牛的图床插件，图片保存在七牛的Bucket中，具体实现原理可以参考[我的博客](http://cjting.me/web2.0/2017-01-23-%E5%9B%BE%E5%BA%8Aon%E4%B8%83%E7%89%9B-%E7%AE%80%E5%8D%95%E5%A5%BD%E7%94%A8%E7%9A%84%E5%9B%BE%E5%BA%8A%E6%8F%92%E4%BB%B6.html)。
 
-![](https://cloud.githubusercontent.com/assets/4210829/22183480/5b54e38a-e0fa-11e6-9f72-f6d7a19ad85d.gif)
+<p align="center">
+  <img src="https://cloud.githubusercontent.com/assets/4210829/22183480/5b54e38a-e0fa-11e6-9f72-f6d7a19ad85d.gif"> 
+</p>
 
 ## 安装
 
