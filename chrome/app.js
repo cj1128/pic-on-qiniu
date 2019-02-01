@@ -17909,7 +17909,7 @@
 	          { target: "_blank", href: "https://portal.qiniu.com/bucket" },
 	          "\u5BF9\u8C61\u5B58\u50A8\u7BA1\u7406"
 	        ),
-	        "\uFF0C\u65B0\u5EFA\u4E00\u4E2A\u7528\u4E8E\u5B58\u50A8\u56FE\u7247\u7684\u516C\u5F00\u5B58\u50A8\u7A7A\u95F4\uFF08\u4F8B\u5982my-pictures\uFF09\u3002\u83B7\u53D6\u5B58\u50A8\u7A7A\u95F4\u6D4B\u8BD5\u57DF\u540D\uFF0C\u4F8B\u5982ok2pw0x6d.bkt.clouddn.com\u3002"
+	        "\uFF0C\u65B0\u5EFA\u4E00\u4E2A\u7528\u4E8E\u5B58\u50A8\u56FE\u7247\u7684\u516C\u5F00\u5B58\u50A8\u7A7A\u95F4\uFF08\u4F8B\u5982 my-pictures\uFF09\uFF0C\u7ED1\u5B9A\u57DF\u540D\uFF0C\u4F8B\u5982 image.my.com\u3002"
 	      ),
 	      _react2.default.createElement(
 	        "li",
@@ -17920,13 +17920,18 @@
 	          { target: "_blank", href: "https://portal.qiniu.com/user/key" },
 	          "\u5BC6\u94A5\u7BA1\u7406"
 	        ),
-	        "\uFF0C\u83B7\u53D6Access Key\u4EE5\u53CASecret Key\u3002"
+	        "\uFF0C\u83B7\u53D6 AccessKey \u4EE5\u53CA SecretKey\u3002"
 	      ),
 	      _react2.default.createElement(
 	        "li",
 	        null,
-	        "\u70B9\u51FB\u5DE6\u4E0A\u89D2\u7684\u201C\u8BBE\u7F6E\u201D\u6309\u94AE\uFF0C\u8F93\u5165Access Key\uFF0CSecret Key\uFF0C\u5B58\u50A8\u7A7A\u95F4\u540D\u79F0(my-pictures)\uFF0C\u5B58\u50A8\u7A7A\u95F4\u533A\u57DF\uFF0C\u4EE5\u53CA\u5B58\u50A8\u7A7A\u95F4\u6D4B\u8BD5\u57DF\u540D\uFF0C\u4FDD\u5B58\u5373\u53EF\u3002"
+	        "\u70B9\u51FB\u5DE6\u4E0A\u89D2\u7684\u201C\u8BBE\u7F6E\u201D\u6309\u94AE\uFF0C\u8F93\u5165 AccessKey\uFF0CSecretKey\uFF0C\u5B58\u50A8\u7A7A\u95F4\u540D\u79F0(my-pictures)\uFF0C\u5B58\u50A8\u7A7A\u95F4\u533A\u57DF\uFF0C\u4EE5\u53CA\u5B58\u50A8\u7A7A\u95F4\u7ED1\u5B9A\u57DF\u540D\uFF0C\u4FDD\u5B58\u5373\u53EF\u3002"
 	      )
+	    ),
+	    _react2.default.createElement(
+	      "p",
+	      null,
+	      "\u7CFB\u7EDF\u4E0D\u4F1A\u4EE5\u4EFB\u4F55\u5F62\u5F0F\u5B58\u50A8\u60A8\u7684 AccessKey \u548C SecretKey\uFF0C\u8BF7\u653E\u5FC3\u4F7F\u7528\u3002"
 	    )
 	  );
 	};
@@ -18265,6 +18270,8 @@
 
 	var _db = __webpack_require__(47);
 
+	var _db2 = _interopRequireDefault(_db);
+
 	var _toastr = __webpack_require__(71);
 
 	var _toastr2 = _interopRequireDefault(_toastr);
@@ -18331,23 +18338,27 @@
 	          return trigger.children[0].getAttribute("src");
 	        }
 	      });
+
 	      this.clipboard.on("success", function (e) {
 	        _toastr2.default.success("拷贝成功");
 	      });
+
 	      this.clipboard.on("error", function () {
 	        _toastr2.default.error("拷贝失败");
 	      });
+
 	      (0, _qiniu.fetch)().then(function (res) {
 	        _this2.setState({
 	          items: res.data.items
 	        });
-	      }).catch(function (error) {
-	        if (error.response.status === 401) {
+	      }).catch(function (err) {
+	        if (err.response && err.response.status === 401) {
 	          _this2.setState({
 	            unauthorized: true
 	          });
 	        }
-	        (0, _sweetalert2.default)(error.message, "", "error");
+
+	        (0, _sweetalert2.default)(err.message, "", "error");
 	      });
 	    }
 	  }, {
@@ -18358,7 +18369,7 @@
 	  }, {
 	    key: "renderItem",
 	    value: function renderItem(item) {
-	      var url = "http://" + (0, _db.getItem)("bucketDomain") + "/" + item.key;
+	      var url = "http://" + _db2.default.bucketDomain + "/" + item.key;
 	      return _react2.default.createElement(
 	        "div",
 	        { key: item.hash, className: "history__grid__item" },
@@ -22409,7 +22420,7 @@
 
 
 	// module
-	exports.push([module.id, "/*\n* @Author: dingxijin\n* @Date:   2016-03-24 12:27:30\n* @Last Modified by:   CJ Ting\n* @Last Modified time: 2016-03-31 18:55:05\n*/\nhtml {\n  font-size: 14px;\n  font-family: \"Hiragino Sans GB\", Helvetica, Tahoma, Arial, \"Microsoft YaHei\", \"\\5FAE\\8F6F\\96C5\\9ED1\", STXihei, \"\\534E\\6587\\7EC6\\9ED1\", SimSun, \"\\5B8B\\4F53\", Heiti, \"\\9ED1\\4F53\", sans-serif;\n}\nbody {\n  font-size: 100%;\n}\n.app {\n  width: 80%;\n  max-width: 1000px;\n  margin: 50px auto;\n}\n.app__tab {\n  padding-bottom: 15px;\n  display: flex;\n  color: rgba(102,102,102,0.5);\n}\n.app__tab > span {\n  cursor: pointer;\n}\n.app__tab > span:hover {\n  color: #0087f7;\n}\n.app__tab > span:nth-child(2) {\n  margin-left: auto;\n}\n.app__tab__current {\n  color: #0087f7;\n}\n.config-tip {\n  padding: 20px;\n  color: rgba(102,102,102,0.5);\n}\n.config-tip > h1 {\n  font-weight: 400;\n  text-align: center;\n}\n.config-tip > ol > li {\n  padding: 20px 0;\n}\n.config-tip > ol > li a {\n  color: #0087f7;\n}\n", ""]);
+	exports.push([module.id, "html {\n  font-size: 14px;\n  font-family: \"Hiragino Sans GB\", Helvetica, Tahoma, Arial, \"Microsoft YaHei\", \"\\5FAE\\8F6F\\96C5\\9ED1\", STXihei, \"\\534E\\6587\\7EC6\\9ED1\", SimSun, \"\\5B8B\\4F53\", Heiti, \"\\9ED1\\4F53\", sans-serif;\n}\nbody {\n  font-size: 100%;\n}\n.app {\n  width: 80%;\n  max-width: 1000px;\n  margin: 50px auto;\n}\n.app__tab {\n  padding-bottom: 15px;\n  display: flex;\n  color: rgba(102,102,102,0.5);\n}\n.app__tab > span {\n  cursor: pointer;\n}\n.app__tab > span:hover {\n  color: #0087f7;\n}\n.app__tab > span:nth-child(2) {\n  margin-left: auto;\n}\n.app__tab__current {\n  color: #0087f7;\n}\n.config-tip {\n  padding-top: 20px;\n  color: rgba(102,102,102,0.5);\n}\n.config-tip > p {\n  margin-top: 40px;\n  font-size: 1em;\n  text-align: right;\n}\n.config-tip > h1 {\n  font-weight: 400;\n  text-align: center;\n}\n.config-tip > ol {\n  padding-left: 20px;\n}\n.config-tip > ol > li {\n  padding: 20px 0;\n}\n.config-tip > ol > li a {\n  color: #0087f7;\n}\n", ""]);
 
 	// exports
 

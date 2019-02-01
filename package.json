@@ -1,6 +1,6 @@
 {
   "name": "pic-on-qiniu",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "七牛图床",
   "main": "entry.jsx",
   "scripts": {

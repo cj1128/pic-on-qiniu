@@ -2,7 +2,7 @@ import "./style"
 import React from "react"
 import Clipboard from "clipboard"
 import { fetch } from "qiniu"
-import { getItem } from "db"
+import db from "db"
 import toastr from "toastr"
 import swal from "sweetalert"
 
@@ -41,24 +41,29 @@ export default class History extends React.Component {
         return trigger.children[0].getAttribute("src")
       },
     })
+
     this.clipboard.on("success", function(e) {
       toastr.success("拷贝成功")
     })
+
     this.clipboard.on("error", function() {
       toastr.error("拷贝失败")
     })
-    fetch().then(res => {
-      this.setState({
-        items: res.data.items,
+
+    fetch()
+      .then(res => {
+        this.setState({
+          items: res.data.items,
+        })
       })
-    })
-      .catch(error => {
-        if(error.response.status === 401) {
+      .catch(err => {
+        if(err.response && err.response.status === 401) {
           this.setState({
             unauthorized: true,
           })
         }
-        swal(error.message, "", "error")
+
+        swal(err.message, "", "error")
       })
   }
 
@@ -67,7 +72,7 @@ export default class History extends React.Component {
   }
 
   renderItem(item) {
-    const url = `http://${getItem("bucketDomain")}/${item.key}`
+    const url = `http://${db.bucketDomain}/${item.key}`
     return (
       <div key={ item.hash } className="history__grid__item">
         <img src={ url} />

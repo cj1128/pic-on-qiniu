@@ -25,9 +25,32 @@
 图床使用七牛存储接口，图片将上传到用户设置的七牛空间中。因此，使用之前，需要首先设置七牛参数。
 
 1. 注册七牛账号，登录。
-2. 进入<a target="_blank" href="https://portal.qiniu.com/bucket">Bucket管理</a>，新建一个用于存储图片的公开bucket（例如my-pictures）。获取Bucket测试域名，例如ok2pw0x6d.bkt.clouddn.com。
-3. 进入<a target="_blank" href="https://portal.qiniu.com/user/key">密钥管理</a>，获取Access Key以及Secret Key。
-4. 点击左上角的“设置”按钮，输入Access Key，Secret Key，Bucket Name(my-pictures)，bucket所在地区例如华东以及Bucket测试域名，保存即可。
+2. 进入<a target="_blank" href="https://portal.qiniu.com/bucket">Bucket管理</a>，新建一个用于存储图片的公开 bucket（例如my-pictures），给 bucket 绑定域名，例如 asset.my.com。
+3. 进入<a target="_blank" href="https://portal.qiniu.com/user/key">密钥管理</a>，获取 AccessKey 以及 SecretKey。
+4. 点击左上角的“设置”按钮，输入 AccessKey，SecretKey，Bucket Name(my-pictures)，bucket 所在地区例如华东以及 Bucket 绑定的域名，保存即可。
 
 注意：**插件不会保存您的七牛Access Token以及Secret Token，请放心使用**。
 
+## Change Log
+
+## 1.4 (2019.2.1)
+
+- 修复 Issue#3
+- 修改了未配置时的文案，目前七牛已经不支持”测试域名“了
+
+## 1.3 (2017.12.4)
+
+- 修复 Issue#2
+
+## 1.2 (2017.2.4)
+
+- 设置页面增加滚动条，兼容小屏幕
+- 增加区域选择，不同区域的存储空间，上传URL不同。
+
+## 1.1 （2017.1.22）
+
+- 历史记录按照时间顺序排列。
+
+## 1.0 （2017.1.22）
+
+- 完成基本功能。

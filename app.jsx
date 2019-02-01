@@ -66,15 +66,22 @@ const ConfigTip = () =>
       <li>
         注册七牛账号，<a target="_blank" href="https://portal.qiniu.com/signin">登陆</a>。
       </li>
+
       <li>
-        进入<a target="_blank" href="https://portal.qiniu.com/bucket">对象存储管理</a>，新建一个用于存储图片的公开存储空间（例如my-pictures）。获取存储空间测试域名，例如ok2pw0x6d.bkt.clouddn.com。
+        进入<a target="_blank" href="https://portal.qiniu.com/bucket">对象存储管理</a>，新建一个用于存储图片的公开存储空间（例如 my-pictures），绑定域名，例如 image.my.com。
       </li>
+
       <li>
-        进入<a target="_blank" href="https://portal.qiniu.com/user/key">密钥管理</a>，获取Access Key以及Secret Key。
+        进入<a target="_blank" href="https://portal.qiniu.com/user/key">密钥管理</a>，获取 AccessKey 以及 SecretKey。
       </li>
+
       <li>
-        点击左上角的“设置”按钮，输入Access Key，Secret Key，存储空间名称(my-pictures)，存储空间区域，以及存储空间测试域名，保存即可。
+        点击左上角的“设置”按钮，输入 AccessKey，SecretKey，存储空间名称(my-pictures)，存储空间区域，以及存储空间绑定域名，保存即可。
       </li>
     </ol>
+
+    <p>
+      系统不会以任何形式存储您的 AccessKey 和 SecretKey，请放心使用。
+    </p>
   </div>
 
