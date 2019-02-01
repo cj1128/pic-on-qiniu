@@ -1,5 +1,5 @@
 <div align="center">
-  <img width="80px" src="http://ww1.sinaimg.cn/large/9b85365dly1fzr0l2zx6zj203k03ka9u">
+  <img width="80px" src="https://user-images.githubusercontent.com/4210829/52112519-b13ff800-2641-11e9-93c6-f9d96b3db60c.png">
 </div>
 
 # 图床on七牛
@@ -14,7 +14,7 @@
 
 ### Chrome应用商店
 
-[![Chrome Web Store](http://ok2pw0x6d.bkt.clouddn.com/Fu6A9oFQcrNuGVo43Iza7XZnMZrk.jpg)](http://ww1.sinaimg.cn/large/9b85365dly1fzr0m6vhqlj20c0038mx9)
+[![Chrome Web Store](http://ww1.sinaimg.cn/large/9b85365dly1fzr0m6vhqlj20c0038mx9)](https://chrome.google.com/webstore/detail/%E5%9B%BE%E5%BA%8Aon%E4%B8%83%E7%89%9B/nikfegmndlnacioppfnmladfjanfdjfe/related?utm_source=chrome-ntp-icon&authuser=1)
 
 ### 下载安装
 
