@@ -14,6 +14,7 @@ export default class Config extends React.Component {
     bucket: db.bucket || "",
     bucketDomain: db.bucketDomain || "",
     region: db.region || REGION_HUADONG,
+    saveKey: db.saveKey || "",
   }
 
   hide = () => {
@@ -34,6 +35,7 @@ export default class Config extends React.Component {
     db.bucket = this.state.bucket.trim()
     db.bucketDomain = this.state.bucketDomain.trim()
     db.region = this.state.region
+    db.saveKey = this.state.saveKey.trim()
     db.token = null // clear token cache
     this.hide()
     this.props.onConfigUpdated()
@@ -117,6 +119,17 @@ export default class Config extends React.Component {
                   onChange={ () => this.setState({region: REGION_BEIMEI}) }
                 />
               </div>
+            </div>
+
+            <div className="config__item">
+              <span>
+                SaveKey(Optional)
+              </span>
+              <input
+                  type="text"
+                  value={ this.state.saveKey }
+                  onChange={ evt => this.setState({saveKey: evt.target.value}) }
+              />
             </div>
 
             <div className="config__item">
