@@ -68,19 +68,21 @@ const ConfigTip = () =>
       </li>
 
       <li>
-        进入<a target="_blank" href="https://portal.qiniu.com/bucket">对象存储管理</a>，新建一个用于存储图片的公开存储空间（例如 my-pictures），绑定域名，例如 image.my.com。
+        进入 <a target="_blank" href="https://portal.qiniu.com/bucket">对象存储管理</a>，新建一个用于存储图片的公开存储空间（例如 my-pictures），绑定域名，例如 image.my.com。
       </li>
 
       <li>
-        进入<a target="_blank" href="https://portal.qiniu.com/user/key">密钥管理</a>，获取 AccessKey 以及 SecretKey。
+        进入 <a target="_blank" href="https://portal.qiniu.com/user/key">密钥管理</a>，获取 AccessKey 以及 SecretKey。
       </li>
 
       <li>
-        （可选）查看<a target="_blank" href="https://developer.qiniu.com/kodo/manual/1235/vars">魔法变量</a>，自定义保存文件名。如配置为 image/$(year)$(mon)$(day)/$(etag)$(ext)，保存路径类似这样 image/20190401/FlM6_0RQjjfz2jPHOlKqYeCkGMUM.jpg。置空则默认为 $(etag)$(ext)。
+        （可选）查看 <a target="_blank" href="https://developer.qiniu.com/kodo/manual/1235/vars">魔法变量</a>，自定义保存文件名。
+
+        如配置为 <i>image/$(year)$(mon)$(day)/$(etag)$(ext)</i>，则最终图片的保存路径为 <i>image/20190401/FlM6_0RQjjfz2jPHOlKqYeCkGMUM.jpg</i>。置空则默认为 <i>$(etag)$(ext)</i>。
       </li>
 
       <li>
-        点击左上角的“设置”按钮，输入 AccessKey，SecretKey，存储空间名称(my-pictures)，存储空间区域，以及存储空间绑定域名，保存即可。
+        点击左上角的 <i>设置</i> 按钮，输入 AccessKey，SecretKey，存储空间名称（例如 my-pictures），存储空间区域，以及存储空间绑定域名，保存即可。
       </li>
     </ol>
 

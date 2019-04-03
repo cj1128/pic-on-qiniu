@@ -134,7 +134,7 @@ export default class Config extends React.Component {
 
             <div className="config__item">
               <span>
-                存储空间测试域名
+                存储空间绑定域名
               </span>
               <input
                 type="text"

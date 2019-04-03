@@ -16,7 +16,7 @@ function genUpToken(accessKey, secretKey) {
   var policyStr = JSON.stringify({
     scope: db.bucket,
     deadline: Math.round(new Date().getTime() / 1000) + 12 * 3600, // 12 hours
-    saveKey: db.saveKey.length > 0? db.saveKey : "$(etag)$(ext)",
+    saveKey: db.saveKey || "$(etag)$(ext)",
   })
   var encoded = btoa(utf16to8(policyStr))
   var hash = CryptoJS.HmacSHA1(encoded, secretKey)

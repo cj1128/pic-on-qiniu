@@ -4,7 +4,7 @@
 
 # 图床on七牛
 
-基于七牛的图床插件，图片保存在七牛的Bucket中，具体实现原理可以参考[我的博客](http://cjting.me/web2.0/2017-01-23-%E5%9B%BE%E5%BA%8Aon%E4%B8%83%E7%89%9B-%E7%AE%80%E5%8D%95%E5%A5%BD%E7%94%A8%E7%9A%84%E5%9B%BE%E5%BA%8A%E6%8F%92%E4%BB%B6.html)。
+基于七牛的图床插件，图片保存在七牛的Bucket中，具体实现原理可以参考  [我的博客](http://cjting.me/web2.0/2017-01-23-%E5%9B%BE%E5%BA%8Aon%E4%B8%83%E7%89%9B-%E7%AE%80%E5%8D%95%E5%A5%BD%E7%94%A8%E7%9A%84%E5%9B%BE%E5%BA%8A%E6%8F%92%E4%BB%B6.html)。
 
 <p align="center">
   <img src="https://cloud.githubusercontent.com/assets/4210829/22183480/5b54e38a-e0fa-11e6-9f72-f6d7a19ad85d.gif"> 
@@ -18,17 +18,17 @@
 
 ### 下载安装
 
-下载仓库，打开Chrome插件设置`chrome://extensions/`，勾选“开发者模式”，将仓库中的`chrome`文件夹拖入即可。
+下载仓库，打开 Chrome 插件设置 `chrome://extensions/`，勾选 *开发者模式*，将仓库中的 `chrome` 文件夹拖入即可。
 
 ## 设置
 
 图床使用七牛存储接口，图片将上传到用户设置的七牛空间中。因此，使用之前，需要首先设置七牛参数。
 
 1. 注册七牛账号，登录。
-2. 进入<a target="_blank" href="https://portal.qiniu.com/bucket">Bucket管理</a>，新建一个用于存储图片的公开 bucket（例如my-pictures），给 bucket 绑定域名，例如 asset.my.com。
-3. 进入<a target="_blank" href="https://portal.qiniu.com/user/key">密钥管理</a>，获取 AccessKey 以及 SecretKey。
-4. （可选）查看<a target="_blank" href="https://developer.qiniu.com/kodo/manual/1235/vars">魔法变量</a>，自定义保存文件名。如配置为 image/$(year)$(mon)$(day)/$(etag)$(ext)，保存路径类似这样 image/20190401/FlM6_0RQjjfz2jPHOlKqYeCkGMUM.jpg。置空则默认为 $(etag)$(ext)。
-5. 点击左上角的“设置”按钮，输入 AccessKey，SecretKey，Bucket Name(my-pictures)，bucket 所在地区例如华东以及 Bucket 绑定的域名，保存即可。
+2. 进入 <a target="_blank" href="https://portal.qiniu.com/bucket">Bucket管理</a>，新建一个用于存储图片的公开 bucket（例如 my-pictures），给 bucket 绑定域名，例如 asset.my.com。
+3. 进入 <a target="_blank" href="https://portal.qiniu.com/user/key">密钥管理</a>，获取 AccessKey 以及 SecretKey。
+4. （可选）查看 <a target="_blank" href="https://developer.qiniu.com/kodo/manual/1235/vars">魔法变量</a>，自定义保存文件名。如配置为 `image/$(year)$(mon)$(day)/$(etag)$(ext)`，则最终图片的保存路径为 `image/20190401/FlM6_0RQjjfz2jPHOlKqYeCkGMUM.jpg`。置空则默认为 `$(etag)$(ext)`。
+5. 点击左上角的 *设置* 按钮，输入 AccessKey，SecretKey，Bucket Name(my-pictures)，bucket 所在地区例如华东以及 Bucket 绑定的域名，保存即可。
 
 注意：**插件不会保存您的七牛Access Token以及Secret Token，请放心使用**。
 
@@ -36,7 +36,7 @@
 
 ### 1.5 (2019.4.1)
 
-- 支持自定义 SaveKey
+- 支持自定义 SaveKey（感谢 [@kevinbai-cn](https://github.com/kevinbai-cn)的贡献）
 
 ### 1.4 (2019.2.1)
 

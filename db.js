@@ -16,7 +16,6 @@ const ALLOWED_ITEMS = [
   "saveKey",
 ]
 
-
 const data = localStorage.getItem(DB_KEY) ?
   JSON.parse(localStorage.getItem(DB_KEY))
   :
