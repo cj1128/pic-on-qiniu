@@ -76,6 +76,10 @@ const ConfigTip = () =>
       </li>
 
       <li>
+        （可选）查看<a target="_blank" href="https://developer.qiniu.com/kodo/manual/1235/vars">魔法变量</a>，自定义保存文件名。如配置为 image/$(year)$(mon)$(day)/$(etag)$(ext)，保存路径类似这样 image/20190401/FlM6_0RQjjfz2jPHOlKqYeCkGMUM.jpg。置空则默认为 $(etag)$(ext)。
+      </li>
+
+      <li>
         点击左上角的“设置”按钮，输入 AccessKey，SecretKey，存储空间名称(my-pictures)，存储空间区域，以及存储空间绑定域名，保存即可。
       </li>
     </ol>

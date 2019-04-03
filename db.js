@@ -13,6 +13,7 @@ const ALLOWED_ITEMS = [
   "token",
   "tokenTime",
   "region",
+  "saveKey",
 ]
 
 
