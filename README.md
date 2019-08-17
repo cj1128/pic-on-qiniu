@@ -4,7 +4,7 @@
 
 # 图床on七牛
 
-基于七牛的图床插件，图片保存在七牛的Bucket中，具体实现原理可以参考  [我的博客](http://cjting.me/web2.0/2017-01-23-%E5%9B%BE%E5%BA%8Aon%E4%B8%83%E7%89%9B-%E7%AE%80%E5%8D%95%E5%A5%BD%E7%94%A8%E7%9A%84%E5%9B%BE%E5%BA%8A%E6%8F%92%E4%BB%B6.html)。
+基于七牛的图床插件，图片保存在七牛的 Bucket 中，具体实现原理可以参考 [我的博客](https://cjting.me/2017/01/23/build-an-img-bed-on-qiniu/)。
 
 <p align="center">
   <img src="https://cloud.githubusercontent.com/assets/4210829/22183480/5b54e38a-e0fa-11e6-9f72-f6d7a19ad85d.gif"> 
@@ -12,7 +12,7 @@
 
 ## 安装
 
-### Chrome应用商店
+### Chrome 应用商店
 
 [![Chrome Web Store](http://ww1.sinaimg.cn/large/9b85365dly1fzr0m6vhqlj20c0038mx9)](https://chrome.google.com/webstore/detail/%E5%9B%BE%E5%BA%8Aon%E4%B8%83%E7%89%9B/nikfegmndlnacioppfnmladfjanfdjfe/related?utm_source=chrome-ntp-icon&authuser=1)
 
@@ -30,7 +30,7 @@
 4. （可选）查看 <a target="_blank" href="https://developer.qiniu.com/kodo/manual/1235/vars">魔法变量</a>，自定义保存文件名。如配置为 `image/$(year)$(mon)$(day)/$(etag)$(ext)`，则最终图片的保存路径为 `image/20190401/FlM6_0RQjjfz2jPHOlKqYeCkGMUM.jpg`。置空则默认为 `$(etag)$(ext)`。
 5. 点击左上角的 *设置* 按钮，输入 AccessKey，SecretKey，Bucket Name(my-pictures)，bucket 所在地区例如华东以及 Bucket 绑定的域名，保存即可。
 
-注意：**插件不会保存您的七牛Access Token以及Secret Token，请放心使用**。
+注意：**插件不会保存您的七牛 Access Token 以及 Secret Token，请放心使用**。
 
 ## Change Log
 
