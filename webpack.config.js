@@ -25,17 +25,11 @@ module.exports = {
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.DefinePlugin({
-      __DEV__: process.env.NODE_ENV === "production" ?
-        false
-        :
-        true,
+      __DEV__: process.env.NODE_ENV === "production" ? false : true,
     }),
   ],
   resolve: {
-    root: [
-      __dirname,
-      path.join(__dirname, "components"),
-    ],
+    root: [__dirname, path.join(__dirname, "components")],
     extensions: ["", ".jsx", ".js", ".styl", ".css", ".json"],
   },
   module: {

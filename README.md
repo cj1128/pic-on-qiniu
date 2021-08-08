@@ -28,11 +28,15 @@
 2. 进入 <a target="_blank" href="https://portal.qiniu.com/bucket">Bucket管理</a>，新建一个用于存储图片的公开 bucket（例如 my-pictures），给 bucket 绑定域名，例如 asset.my.com。
 3. 进入 <a target="_blank" href="https://portal.qiniu.com/user/key">密钥管理</a>，获取 AccessKey 以及 SecretKey。
 4. （可选）查看 <a target="_blank" href="https://developer.qiniu.com/kodo/manual/1235/vars">魔法变量</a>，自定义保存文件名。如配置为 `image/$(year)$(mon)$(day)/$(etag)$(ext)`，则最终图片的保存路径为 `image/20190401/FlM6_0RQjjfz2jPHOlKqYeCkGMUM.jpg`。置空则默认为 `$(etag)$(ext)`。
-5. 点击左上角的 *设置* 按钮，输入 AccessKey，SecretKey，Bucket Name(my-pictures)，bucket 所在地区例如华东以及 Bucket 绑定的域名，保存即可。
+5. 点击左上角的 *设置* 按钮，输入 AccessKey，SecretKey，Bucket Name，Bucket 所在地区以及 Bucket 绑定的域名，保存即可。
 
 注意：**插件不会保存您的七牛 Access Token 以及 Secret Token，请放心使用**。
 
 ## Change Log
+
+### 1.6 (2021.8.8)
+
+- 增加「复制为 Markdown 链接」按钮
 
 ### 1.5 (2019.4.1)
 

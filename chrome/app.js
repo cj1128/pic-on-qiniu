@@ -8429,15 +8429,15 @@
 	  len = str.length;
 	  for (i = 0; i < len; i++) {
 	    c = str.charCodeAt(i);
-	    if (c >= 0x0001 && c <= 0x007F) {
+	    if (c >= 0x0001 && c <= 0x007f) {
 	      out += str.charAt(i);
-	    } else if (c > 0x07FF) {
-	      out += String.fromCharCode(0xE0 | c >> 12 & 0x0F);
-	      out += String.fromCharCode(0x80 | c >> 6 & 0x3F);
-	      out += String.fromCharCode(0x80 | c >> 0 & 0x3F);
+	    } else if (c > 0x07ff) {
+	      out += String.fromCharCode(0xe0 | c >> 12 & 0x0f);
+	      out += String.fromCharCode(0x80 | c >> 6 & 0x3f);
+	      out += String.fromCharCode(0x80 | c >> 0 & 0x3f);
 	    } else {
-	      out += String.fromCharCode(0xC0 | c >> 6 & 0x1F);
-	      out += String.fromCharCode(0x80 | c >> 0 & 0x3F);
+	      out += String.fromCharCode(0xc0 | c >> 6 & 0x1f);
+	      out += String.fromCharCode(0x80 | c >> 0 & 0x3f);
 	    }
 	  }
 	  return out;
@@ -8464,7 +8464,9 @@
 	  return false;
 	}
 
-	var IconCopy = exports.IconCopy = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAAllBMVEUAAAAAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/f+/svYAAAAMXRSTlMAAQIDBQYHCAkLDBEUFRgZHh8gIUJFS1ZYYmNmjpSbnaCytMXO0dXZ2uTm6e/z+fv9ErSjVQAAAJ1JREFUGFeVzkkWgkAUQ9GAJYgWonxFbBDseyT735wDQCg9DnzDO8gJAADwtNa6h3ZqS5IsVMu6e9K2bY/9xpzDbkIAqoXucdOREn0/CIKhApxTaqHCJ0nyDCQkyQuAMYsZACGQxyISuoB+zLMaKeX04L5A+oHebYkvXJMkpybmkYiMLBOp698/8coyA91QRERMrPoDI6mKG1zxXYIX1fwXXesnfg0AAAAASUVORK5CYII=";
+	var IconLink = exports.IconLink = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAAZlBMVEUAAAAAgO8AgP8Ah/cAhfQAhfoAivQAivoAg/MAg/cAh/MAh/cAg/UAhvUAh/YAh/gAhvYAhvgAhvcAhfUAh/cAh/gAhvYAh/cAh/kAh/UAh/YAh/cAhvgAh/YAh/cAh/YAh/gAh/erq/hfAAAAIXRSTlMAEBAgMDAwMEBAQEBQUG9vcHB/gICPkJ+foK+/z8/f7+/3XkZ+AAAAo0lEQVR42lXPhY3EMBRFUW+Ymfn23+Q60RuyyDqfzfdzvMj9AUvNCYxi2Qb7Cse3bhypMe7O+jFfKX8nzkdT/XcSSVS0mXqtQmcBOKr774KjuefQrmDVPRhkdoZjarrbNudtjU1z3mb622waazudsj+wZvUAmB8zMbrAzdsyMEa46/ZI8pRfzpN4EH50ZXPtSQebQCmsG5r71hk4u4+J0+CH/gHqWg6JhPTq4gAAAABJRU5ErkJggg==";
+
+	var IconMarkdown = exports.IconMarkdown = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAASFBMVEUAAAAAgP8AgPcAh/cAivoAg/cAh/cAhvoAh/QAhvkAhvgAh/YAhfYAhvYAh/cAh/YAh/gAh/cAhvgAh/YAh/cAh/YAh/gAh/f/BCSbAAAAF3RSTlMAECAgMEBAX2B/j4+QkJ+vr7/Pz9/v72gNOg0AAABoSURBVHjapcoFFsMgEADRiVAXnPufFKt385RJsP+W0WYR6CQypI0aGlO3YFy7uid6uCa/cGhX9UHMjn9cmOr3h+rMcqm4p3Z/YTr5W5tc4fierJeOcWnWMBpbL974tqcnyjDSNCwiBivoXBEOV0ymhQAAAABJRU5ErkJggg==";
 
 /***/ },
 /* 50 */
@@ -18655,11 +18657,7 @@
 	    key: "renderFiles",
 	    value: function renderFiles() {
 	      return this.state.files.map(function (file) {
-	        return _react2.default.createElement(Item, {
-	          url: file.url,
-	          file: file,
-	          key: file.preview
-	        });
+	        return _react2.default.createElement(Item, { url: file.url, file: file, key: file.preview });
 	      });
 	    }
 	  }, {
@@ -18705,18 +18703,35 @@
 	      args[_key2] = arguments[_key2];
 	    }
 
-	    return _ret3 = (_temp2 = (_this2 = _possibleConstructorReturn(this, (_ref2 = Item.__proto__ || Object.getPrototypeOf(Item)).call.apply(_ref2, [this].concat(args))), _this2), _this2.onRenderResult = function (el) {
+	    return _ret3 = (_temp2 = (_this2 = _possibleConstructorReturn(this, (_ref2 = Item.__proto__ || Object.getPrototypeOf(Item)).call.apply(_ref2, [this].concat(args))), _this2), _this2.onRenderCopyURL = function (el) {
 	      if (el == null) {
-	        _this2.clipboard.destroy();
+	        _this2.copyURL.destroy();
 	        return;
 	      }
-	      _this2.clipboard = new _clipboard2.default(el, {
-	        target: function target(trigger) {
-	          return trigger.parentNode.children[0];
+
+	      _this2.copyURL = new _clipboard2.default(el, {
+	        text: function text() {
+	          return _this2.props.url;
 	        }
 	      });
-	      _this2.clipboard.on("success", function () {
-	        _toastr2.default.success("拷贝成功");
+
+	      _this2.copyURL.on("success", function () {
+	        _toastr2.default.success("拷贝 URL 成功");
+	      });
+	    }, _this2.onRenderCopyMarkdown = function (el) {
+	      if (el == null) {
+	        _this2.copyMarkdown.destroy();
+	        return;
+	      }
+
+	      _this2.copyMarkdown = new _clipboard2.default(el, {
+	        text: function text() {
+	          return "![](" + _this2.props.url + ")";
+	        }
+	      });
+
+	      _this2.copyMarkdown.on("success", function () {
+	        _toastr2.default.success("拷贝 Markdown Link 成功");
 	      });
 	    }, _temp2), _possibleConstructorReturn(_this2, _ret3);
 	  }
@@ -18726,19 +18741,23 @@
 	    value: function renderResult() {
 	      return _react2.default.createElement(
 	        "div",
-	        {
-	          className: "upload__item__result"
-	        },
+	        { className: "upload__item__result" },
 	        _react2.default.createElement(
 	          "span",
 	          null,
 	          this.props.url
 	        ),
 	        _react2.default.createElement("img", {
-	          className: "upload__copy-btn",
-	          title: "\u590D\u5236URL",
-	          ref: this.onRenderResult,
-	          src: _utils.IconCopy
+	          className: "upload__copy-url",
+	          title: "Copy URL",
+	          ref: this.onRenderCopyURL,
+	          src: _utils.IconLink
+	        }),
+	        _react2.default.createElement("img", {
+	          className: "upload__copy-markdown",
+	          title: "Copy as Markdown",
+	          ref: this.onRenderCopyMarkdown,
+	          src: _utils.IconMarkdown
 	        })
 	      );
 	    }
@@ -22529,7 +22548,7 @@
 
 
 	// module
-	exports.push([module.id, ".upload__dropzone {\n  width: 100%;\n  cursor: copy;\n  background: #fff;\n  border-radius: 5px;\n  box-shadow: 0 0 10px #aaa;\n}\n.upload__files {\n  box-shadow: 0 0 10px #aaa;\n  border-radius: 5px;\n}\n.upload__dropzone--active {\n  border: 2px dashed #0087f7;\n}\n.upload__placeholder {\n  align-self: center;\n  margin: 0;\n  padding: 80px 20px;\n  text-align: center;\n  color: rgba(102,102,102,0.5);\n}\n.upload__item {\n  cursor: default;\n  padding: 20px 40px;\n  display: flex;\n  align-items: center;\n}\n.upload__item > img {\n  width: 20%;\n  margin-right: 10%;\n}\n.upload__loading {\n  display: flex;\n  align-items: center;\n  flex: 1;\n}\n.upload__loading > span {\n  color: #808080;\n  margin-left: auto;\n  margin-right: 50px;\n}\n.upload__item__result {\n  width: 70%;\n  padding: 0;\n  display: flex;\n  padding: 10px 0;\n  align-items: center;\n}\n.upload__item__result > span:first-child {\n  margin-right: 20px;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n  color: #0087f7;\n}\n.upload__item__result > img:last-child {\n  width: 20px;\n  margin-left: auto;\n  cursor: pointer;\n}\n", ""]);
+	exports.push([module.id, ".upload__dropzone {\n  width: 100%;\n  cursor: copy;\n  background: #fff;\n  border-radius: 5px;\n  box-shadow: 0 0 10px #aaa;\n}\n.upload__files {\n  box-shadow: 0 0 10px #aaa;\n  border-radius: 5px;\n}\n.upload__dropzone--active {\n  border: 2px dashed #0087f7;\n}\n.upload__placeholder {\n  align-self: center;\n  margin: 0;\n  padding: 80px 20px;\n  text-align: center;\n  color: rgba(102,102,102,0.5);\n}\n.upload__item {\n  cursor: default;\n  padding: 20px 40px;\n  display: flex;\n  align-items: center;\n}\n.upload__item > img {\n  width: 20%;\n  margin-right: 10%;\n}\n.upload__loading {\n  display: flex;\n  align-items: center;\n  flex: 1;\n}\n.upload__loading > span {\n  color: #808080;\n  margin-left: auto;\n  margin-right: 50px;\n}\n.upload__item__result {\n  width: 70%;\n  padding: 0;\n  display: flex;\n  padding: 10px 0;\n  align-items: center;\n}\n.upload__item__result > span:first-child {\n  margin-right: 20px;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n  color: #0087f7;\n}\n.upload__item__result > img {\n  width: 20px;\n  cursor: pointer;\n}\n.upload__copy-url {\n  margin-left: auto;\n  margin-right: 10px;\n}\n", ""]);
 
 	// exports
 

@@ -1,13 +1,13 @@
 {
   "name": "pic-on-qiniu",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "七牛图床",
   "main": "entry.jsx",
   "scripts": {
-    "dev": "webpack-dev-server --hot --inline --content-base chrome",
+    "dev": "webpack --watch --progress --color",
     "build": "NODE_ENV=production webpack && zip -r chrome.zip chrome"
   },
-  "author": "CJ Ting<fatelovely1128@gmail.com>",
+  "author": "CJ Ting <cjting1128@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.15.3",

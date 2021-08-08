@@ -2,17 +2,17 @@ export function utf16to8(str) {
   var out, i, len, c
   out = ""
   len = str.length
-  for(i = 0; i < len; i++) {
+  for (i = 0; i < len; i++) {
     c = str.charCodeAt(i)
-    if ((c >= 0x0001) && (c <= 0x007F)) {
+    if (c >= 0x0001 && c <= 0x007f) {
       out += str.charAt(i)
-    } else if (c > 0x07FF) {
-      out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F))
-      out += String.fromCharCode(0x80 | ((c >>  6) & 0x3F))
-      out += String.fromCharCode(0x80 | ((c >>  0) & 0x3F))
+    } else if (c > 0x07ff) {
+      out += String.fromCharCode(0xe0 | ((c >> 12) & 0x0f))
+      out += String.fromCharCode(0x80 | ((c >> 6) & 0x3f))
+      out += String.fromCharCode(0x80 | ((c >> 0) & 0x3f))
     } else {
-      out += String.fromCharCode(0xC0 | ((c >>  6) & 0x1F))
-      out += String.fromCharCode(0x80 | ((c >>  0) & 0x3F))
+      out += String.fromCharCode(0xc0 | ((c >> 6) & 0x1f))
+      out += String.fromCharCode(0x80 | ((c >> 0) & 0x3f))
     }
   }
   return out
@@ -39,4 +39,8 @@ export function isDescendant(parent, child) {
   return false
 }
 
-export const IconCopy = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAAllBMVEUAAAAAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/cAh/f+/svYAAAAMXRSTlMAAQIDBQYHCAkLDBEUFRgZHh8gIUJFS1ZYYmNmjpSbnaCytMXO0dXZ2uTm6e/z+fv9ErSjVQAAAJ1JREFUGFeVzkkWgkAUQ9GAJYgWonxFbBDseyT735wDQCg9DnzDO8gJAADwtNa6h3ZqS5IsVMu6e9K2bY/9xpzDbkIAqoXucdOREn0/CIKhApxTaqHCJ0nyDCQkyQuAMYsZACGQxyISuoB+zLMaKeX04L5A+oHebYkvXJMkpybmkYiMLBOp698/8coyA91QRERMrPoDI6mKG1zxXYIX1fwXXesnfg0AAAAASUVORK5CYII="
+export const IconLink =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAAZlBMVEUAAAAAgO8AgP8Ah/cAhfQAhfoAivQAivoAg/MAg/cAh/MAh/cAg/UAhvUAh/YAh/gAhvYAhvgAhvcAhfUAh/cAh/gAhvYAh/cAh/kAh/UAh/YAh/cAhvgAh/YAh/cAh/YAh/gAh/erq/hfAAAAIXRSTlMAEBAgMDAwMEBAQEBQUG9vcHB/gICPkJ+foK+/z8/f7+/3XkZ+AAAAo0lEQVR42lXPhY3EMBRFUW+Ymfn23+Q60RuyyDqfzfdzvMj9AUvNCYxi2Qb7Cse3bhypMe7O+jFfKX8nzkdT/XcSSVS0mXqtQmcBOKr774KjuefQrmDVPRhkdoZjarrbNudtjU1z3mb622waazudsj+wZvUAmB8zMbrAzdsyMEa46/ZI8pRfzpN4EH50ZXPtSQebQCmsG5r71hk4u4+J0+CH/gHqWg6JhPTq4gAAAABJRU5ErkJggg=="
+
+export const IconMarkdown =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAASFBMVEUAAAAAgP8AgPcAh/cAivoAg/cAh/cAhvoAh/QAhvkAhvgAh/YAhfYAhvYAh/cAh/YAh/gAh/cAhvgAh/YAh/cAh/YAh/gAh/f/BCSbAAAAF3RSTlMAECAgMEBAX2B/j4+QkJ+vr7/Pz9/v72gNOg0AAABoSURBVHjapcoFFsMgEADRiVAXnPufFKt385RJsP+W0WYR6CQypI0aGlO3YFy7uid6uCa/cGhX9UHMjn9cmOr3h+rMcqm4p3Z/YTr5W5tc4fierJeOcWnWMBpbL974tqcnyjDSNCwiBivoXBEOV0ymhQAAAABJRU5ErkJggg=="
